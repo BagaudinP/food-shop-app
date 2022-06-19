@@ -1,0 +1,246 @@
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*, h1, h2, h3, h4, span, p {
+  margin: 0;
+  padding: 0;
+  line-height: normal;
+  font-family: 'Rubik', sans-serif;
+}
+.clear {
+  max-width: 1192px;
+  margin: 0 auto;
+  .container {
+    max-width: 1192px;
+    margin: 0 auto;
+    margin-bottom: 100px;
+  }
+}
+
+header {
+  height: 54px;
+  background: #043E44;
+  border-radius: 8px;
+  margin: 28px 0 27px 0;
+  padding: 0 24px;
+  
+  h3 {
+    font-size: 18px;
+    color: #fff;
+  }
+
+  p {
+    font-size: 14px;
+    color: #fff;
+  }
+
+  .search-block {
+    display: flex;
+    cursor: pointer;
+    width: 482px;
+    padding: 10px 12px;
+    background: #fff;
+    border-radius: 8px;
+    
+    input {
+      width: 100%;
+      color: #000;
+      font-size: 16px;
+      border: none;
+      padding: 0;
+    }
+
+    img {
+      margin: 0;
+    }
+  }
+
+  li {
+    span {
+      color: #fff;
+      font-weight: 500;
+    }
+  }
+}
+
+.main {
+  margin-bottom: 100px;
+  .sort {
+    position: relative;
+    &__label {
+      display: flex;
+      align-items: center;
+  
+      svg {
+        margin-right: 8px;
+      }
+  
+      b {
+        margin-right: 8px;
+      }
+  
+      span {
+        color: #ED6B06;
+        border-bottom: 1px dashed #ED6B06;
+        cursor: pointer;
+      }
+    }
+  
+    &__popup {
+      position: absolute;
+      right: 0;
+      margin-top: 15px;
+      background: #ffffff;
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.09);
+      border-radius: 10px;
+      overflow: hidden;
+      padding: 10px 0;
+      width: 160px;
+  
+      ul {
+        overflow: hidden;
+        li {
+          padding: 12px 20px;
+          cursor: pointer;
+  
+          &.active,
+          &:hover {
+            background: rgba(254, 95, 30, 0.05);
+          }
+  
+          &.active {
+            font-weight: bold;
+            color: #ED6B06;
+          }
+        }
+      }
+    }
+  }
+  .categories {
+    li {
+      cursor: pointer;
+      color: #7B7B7B;
+      padding: 10px 16px;
+      margin: 0 17px 16px 0;
+      border-radius: 53px;
+      background: #F7F7F7;
+      &:hover {
+        color: #fff;
+        background: #ED6B06;
+      }
+    }
+    li.active {
+      color: #fff;
+      background: #ED6B06;
+    }
+  }
+  .card {
+    width: 280px;
+    height: 420px;
+    margin: 0 0 24px 0;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+    &:hover {
+      transform: translateY(-4px)
+    }
+    &__favorite {
+      position: absolute;
+      cursor: pointer;
+      padding: 18px;
+    }
+    &__image {
+      width: 280px;
+      height: 260px;
+      border-radius: 5px 5px 0 0;
+    }
+    &__title {
+      margin: 13px 16px 12px 15px;
+      h4 {
+        font-size: 18px;
+        margin-bottom: 5px;
+      } 
+      &-selector {
+        margin-top: 6px;
+        ul {
+          display: flex;
+          flex: 1 1;
+          li {
+            flex: 1 1;
+            text-align: center;
+            font-size: 14px;
+            padding: 10px;
+            background: #ebebeb;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 4px;
+            &:last-child {
+              margin-right: 0;
+            }
+            &.active {
+              background: #209041;
+              color: white;
+            }
+          }
+        }
+      }
+    }
+    &__price {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-left: 15px;
+      h3 {
+        font-size: 20px;
+      } 
+      span {
+        cursor: pointer;
+        width: 56px;
+        height: 36px;
+        background: #209041;
+        border-radius: 18px 0 0 18px;
+      }
+    }
+  }
+}
+.footer {
+  height: 300px;
+  margin: 0 auto;
+  background: #209041;
+  &-info {
+    margin: 42px 210px;
+    &__contact {
+      li {
+        color: #fff;
+        font-weight: 500;
+        font-size: 16px;
+        &:last-child {
+          margin-top: 32px;
+          font-weight:400;
+          font-size: 14px;
+        }
+      }
+    }
+    &__pay {
+      li {
+        margin-right: 16px;
+        img {
+          width: 100%;
+        }
+      }
+    }
+    &__social {
+      img {
+        margin-right: 12px;
+        width: 36px;
+      }
+    }
+  }
+  .image {
+    width: 100%;
+    height: 114px;
+  }
+}
