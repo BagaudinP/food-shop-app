@@ -9,19 +9,21 @@ import { Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div className="clear">
-      <div className="container clear">
-        <Header />
-        <div className="main">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/notfound" element={<NotFound />} />
-          </Routes>
+    <>
+      <div className="clear">
+        <div className="container clear">
+          <Header />
+          <div className="main">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </div>
         </div>
       </div>
       <Footer />
-    </div>
+    </>
   );
 }
 

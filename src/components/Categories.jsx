@@ -15,7 +15,7 @@ function Categories() {
     "Йогурт ложковый",
   ];
   return (
-    <div className="categories mb-30">
+    <div className="main__content-categories">
       <ul className="d-flex align-center flex-wrap">
         {categories.map((categoriesiItem, index) => (
           <li

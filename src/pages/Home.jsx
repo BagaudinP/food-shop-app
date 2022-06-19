@@ -17,11 +17,12 @@ export default function Home() {
       setFoodItems(allItems);
       setIsLoading(false);
     });
+    window.scrollTo(0, 0);
   }, []);
 
   return (
-    <div>
-      <div>
+    <div className="main__content">
+      <div className="main__content-title">
         {/* <h1 style={{ fontSize: "24px" }} className="mb-20">
         Продукты по акции
       </h1>
@@ -32,7 +33,7 @@ export default function Home() {
         </div>
       </div>
       <Categories />
-      <div className="d-flex align-center justify-between flex-wrap">
+      <div className="main__content-item">
         {isLoading
           ? [...new Array(8)].map((_, index) => <CardSkeleton key={index} />)
           : foodItems?.map((obj) => <Card key={obj.id} {...obj} />)}

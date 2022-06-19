@@ -1,10 +1,11 @@
 import React from "react";
+import footerImage from "../assets/img/footer-background.jpg";
 
 function Footer() {
   return (
     <div className="footer">
-      <img className="image" src="img/footer-background.jpg" alt="Background" />
-      <div className="footer-info d-flex justify-between align-end">
+      <img className="image" src={footerImage} alt="Background" />
+      {/* <div className="footer-info d-flex justify-between align-end">
         <div className="footer-info__contact">
           <ul className="cu-p">
             <li>+7 499 653 67 66</li>
@@ -21,16 +22,7 @@ function Footer() {
               <img src="img/visa.svg" alt="Visa" />
             </li>
             <li>
-              <img src="img/gpay.svg" alt="Gpay" />
-            </li>
-            <li>
-              <img src="img/applepay.svg" alt="ApplePay" />
-            </li>
-            <li>
               <img src="img/maestro.svg" alt="Maestro" />
-            </li>
-            <li>
-              <img src="img/maestrocard.svg" alt="MaestroCard" />
             </li>
           </ul>
         </div>
@@ -50,7 +42,7 @@ function Footer() {
             </li>
           </ul>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
