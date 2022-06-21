@@ -10,15 +10,29 @@ import axios from "axios";
 export default function Home() {
   const [foodItems, setFoodItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
+  const [categoriesIndex, setCategoriesIndex] = React.useState(0);
+  const [sortIndex, setSortIndex] = React.useState({
+    name: "популярности",
+    sortProperty: "rating",
+  });
 
   React.useEffect(() => {
-    axios.get("https://62aee578b735b6d16a48d3b4.mockapi.io/items").then((resp) => {
-      const allItems = resp.data;
-      setFoodItems(allItems);
-      setIsLoading(false);
-    });
+    setIsLoading(true);
+
+    const categories = categoriesIndex > 0 ? `category=${categoriesIndex}` : "";
+    const sortBy = sortIndex.sortProperty.replace("-", "");
+    const order = sortIndex.sortProperty.includes("-") ? "ask" : "desc";
+    axios
+      .get(
+        `https://62aee578b735b6d16a48d3b4.mockapi.io/items?${categories}&sortBy=${sortBy}&order=${order}`
+      )
+      .then((resp) => {
+        const allItems = resp.data;
+        setFoodItems(allItems);
+        setIsLoading(false);
+      });
     window.scrollTo(0, 0);
-  }, []);
+  }, [categoriesIndex, sortIndex]);
 
   return (
     <div className="main__content">
@@ -29,10 +43,13 @@ export default function Home() {
       <CarouselHome /> */}
         <div className="d-flex justify-between align-center mb-20">
           <h1 style={{ fontSize: "24px" }}>Все продукты</h1>
-          <Sort />
+          <Sort sortIndex={sortIndex} onClickSort={(index) => setSortIndex(index)} />
         </div>
       </div>
-      <Categories />
+      <Categories
+        categoriesIndex={categoriesIndex}
+        onClickCategory={(index) => setCategoriesIndex(index)}
+      />
       <div className="main__content-item">
         {isLoading
           ? [...new Array(8)].map((_, index) => <CardSkeleton key={index} />)
