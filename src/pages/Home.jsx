@@ -4,10 +4,13 @@ import Card from "../components/Card/Card.jsx";
 import CardSkeleton from "../components/Card/CardSkeleton.jsx";
 import Categories from "../components/Categories";
 import Sort from "../components/Sort";
+import Pagination from "../components/Pagination/Pagination";
+import { AppContext } from "../App";
 
 import axios from "axios";
 
 export default function Home() {
+  const { searchValue } = React.useContext(AppContext);
   const [foodItems, setFoodItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [categoriesIndex, setCategoriesIndex] = React.useState(0);
@@ -15,6 +18,7 @@ export default function Home() {
     name: "популярности",
     sortProperty: "rating",
   });
+  const [currentPage, setCurrentPage] = React.useState(1);
 
   React.useEffect(() => {
     setIsLoading(true);
@@ -22,9 +26,10 @@ export default function Home() {
     const categories = categoriesIndex > 0 ? `category=${categoriesIndex}` : "";
     const sortBy = sortIndex.sortProperty.replace("-", "");
     const order = sortIndex.sortProperty.includes("-") ? "ask" : "desc";
+    const search = searchValue ? `search=${searchValue}` : "";
     axios
       .get(
-        `https://62aee578b735b6d16a48d3b4.mockapi.io/items?${categories}&sortBy=${sortBy}&order=${order}`
+        `https://62aee578b735b6d16a48d3b4.mockapi.io/items?page=${currentPage}&${search}&limit=4&${categories}&sortBy=${sortBy}&order=${order}`
       )
       .then((resp) => {
         const allItems = resp.data;
@@ -32,7 +37,7 @@ export default function Home() {
         setIsLoading(false);
       });
     window.scrollTo(0, 0);
-  }, [categoriesIndex, sortIndex]);
+  }, [categoriesIndex, sortIndex, currentPage, searchValue]);
 
   return (
     <div className="main__content">
@@ -52,9 +57,10 @@ export default function Home() {
       />
       <div className="main__content-item">
         {isLoading
-          ? [...new Array(8)].map((_, index) => <CardSkeleton key={index} />)
+          ? [...new Array(8)].map((_, index) => <CardSkeleton key={index} />) // _, - чтобы js не ругался
           : foodItems?.map((obj) => <Card key={obj.id} {...obj} />)}
       </div>
+      <Pagination onChangePage={(number) => setCurrentPage(number)} />
     </div>
   );
 }

@@ -1,0 +1,53 @@
+div {
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 30px !important;
+        li {
+            a {
+                width: 45px;
+                height: 45px;
+                display: flex;
+                cursor: pointer;
+                justify-content: center;
+                align-items: center;
+                color: black;
+                font-weight: 500;
+                font-size: 14px;
+                border: 1px solid #209041;
+                border-radius: 50%;
+                margin-right: 8px;
+                &:hover {
+                    color: white;
+                    background: #209041;
+                }
+            }
+            &:last-child, &:first-child {
+                a {
+                    width: 35px;
+                    height: 35px;
+                    color: black;
+                    &:hover {
+                        color: white;
+                        background: #41b864;
+                        border: none;
+                    }
+                }
+            }
+            &:last-child {
+                a {
+                    margin: 0;
+                }
+            }
+        }
+        :global {
+            .selected {
+                a {
+                    color: white;
+                    background: #209041;
+                }
+            }
+        }
+    }
+}
