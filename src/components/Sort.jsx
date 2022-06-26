@@ -1,18 +1,25 @@
 import React from "react";
 
-function Sort({ sortIndex, onClickSort }) {
-  const [openPopup, setOpenPopup] = React.useState(false);
-  const listPopup = [
-    { name: "популярности + -", sortProperty: "rating" },
-    { name: "популярности - +", sortProperty: "-rating" },
-    { name: "цене + -", sortProperty: "price" },
-    { name: "цене - +", sortProperty: "-price" },
-    { name: "алфавиту + -", sortProperty: "title" },
-    { name: "алфавиту - +", sortProperty: "-title" },
-  ];
+import { setSortIndex } from "../redux/slices/filterSlice";
+import { useSelector, useDispatch } from "react-redux";
 
-  const onClickPopupItem = (index) => {
-    onClickSort(index);
+export const listPopup = [
+  { name: "популярности + -", sortProperty: "rating" },
+  { name: "популярности - +", sortProperty: "-rating" },
+  { name: "цене по убыванию", sortProperty: "price" },
+  { name: "цене по возрастанию", sortProperty: "-price" },
+  { name: "алфавиту А - Я", sortProperty: "-title" },
+  { name: "алфавиту Я - А", sortProperty: "title" },
+];
+
+function Sort() {
+  const dispatch = useDispatch();
+  const sortIndex = useSelector((state) => state.filterSlice.sortIndex);
+
+  const [openPopup, setOpenPopup] = React.useState(false);
+
+  const onClickPopupItem = (obj) => {
+    dispatch(setSortIndex(obj));
     setOpenPopup(false);
   };
   return (

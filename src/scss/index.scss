@@ -50,6 +50,9 @@ header {
   margin-bottom: 100px;
   &__content {
     &-title {
+      h1 {
+        font-size: 26px;
+      }
       div {
         @media(max-width: 1200px) {
           margin: 15px;
