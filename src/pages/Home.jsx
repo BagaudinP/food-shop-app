@@ -10,8 +10,8 @@ import { AppContext } from "../App";
 import { useNavigate } from "react-router-dom";
 import qs from "qs";
 import { setCategoriesIndex, setCurrentPage, setFilters } from "../redux/slices/filterSlice";
+import { fetchFoodItems } from "../redux/slices/foodItemsSlice";
 import { useSelector, useDispatch } from "react-redux";
-import axios from "axios";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -19,12 +19,10 @@ export default function Home() {
   const isSeacrh = React.useRef(false);
   const isMounted = React.useRef(false);
 
-  const { categoriesIndex, sortIndex, currentPage } = useSelector((state) => state.filterSlice);
+  const { categoriesIndex, sortIndex, currentPage } = useSelector((state) => state.filter);
+  const { foodItems, status } = useSelector((state) => state.foodItems);
 
   const { searchValue } = React.useContext(AppContext);
-
-  const [foodItems, setFoodItems] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(true);
 
   const onClickCategory = (index) => {
     dispatch(setCategoriesIndex(index));
@@ -34,21 +32,22 @@ export default function Home() {
     dispatch(setCurrentPage(number));
   };
 
-  const fetchItems = () => {
-    setIsLoading(true);
-
-    const categories = categoriesIndex > 0 ? `category=${categoriesIndex}` : "";
+  const fetchItems = async () => {
     const sortBy = sortIndex.sortProperty.replace("-", "");
     const order = sortIndex.sortProperty.includes("-") ? "ask" : "desc";
+    const categories = categoriesIndex > 0 ? `category=${categoriesIndex}` : "";
     const search = searchValue ? `search=${searchValue}` : "";
-    axios
-      .get(
-        `https://62aee578b735b6d16a48d3b4.mockapi.io/items?page=${currentPage}&${search}&limit=8&${categories}&sortBy=${sortBy}&order=${order}`
-      )
-      .then((resp) => {
-        setFoodItems(resp.data);
-        setIsLoading(false);
-      });
+
+    dispatch(
+      fetchFoodItems({
+        sortBy,
+        order,
+        categories,
+        search,
+        currentPage,
+      })
+    );
+    window.scrollTo(0, 0);
   };
 
   React.useEffect(() => {
@@ -69,23 +68,19 @@ export default function Home() {
 
       const sort = listPopup.find((obj) => obj.sortProperty === params.sortProperty);
 
-      dispatch(
-        setFilters({
-          ...params,
-          sort,
-        })
-      );
-      isSeacrh.current = true;
+      // dispatch(
+      //   setFilters({
+      //     ...params,
+      //     sort,
+      //   })
+      // );
+      // isSeacrh.current = true;
     }
   }, []);
 
   React.useEffect(() => {
-    window.scrollTo(0, 0);
-    if (!isSeacrh.current) {
-      fetchItems();
-    }
-    isSeacrh.current = false;
-  }, [categoriesIndex, sortIndex.sortProperty, currentPage, searchValue]);
+    fetchItems();
+  }, []);
 
   return (
     <div className="main__content">
@@ -100,11 +95,18 @@ export default function Home() {
         </div>
       </div>
       <Categories categoriesIndex={categoriesIndex} onClickCategory={onClickCategory} />
-      <div className="main__content-item">
-        {isLoading
-          ? [...new Array(8)].map((_, index) => <CardSkeleton key={index} />) // _, - чтобы js не ругался
-          : foodItems?.map((obj) => <Card key={obj.id} {...obj} />)}
-      </div>
+      {status === "error" ? (
+        <div className="main__content-item__error">
+          <h1>Произошла ошибка 😕</h1>
+          <p>При запросе продуктов произошла ошибка. Вернитесь к нам позже.</p>
+        </div>
+      ) : (
+        <div className="main__content-item">
+          {status === "loading"
+            ? [...new Array(8)].map((_, index) => <CardSkeleton key={index} />) // _, - чтобы js не ругался
+            : foodItems?.map((obj) => <Card key={obj.id} {...obj} />)}
+        </div>
+      )}
       <Pagination currentPage={currentPage} onChangePage={onChangePage} />
     </div>
   );

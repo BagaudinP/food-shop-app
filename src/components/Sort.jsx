@@ -14,7 +14,9 @@ export const listPopup = [
 
 function Sort() {
   const dispatch = useDispatch();
-  const sortIndex = useSelector((state) => state.filterSlice.sortIndex);
+  const sortIndex = useSelector((state) => state.filter.sortIndex);
+
+  const sortRef = React.useRef(null);
 
   const [openPopup, setOpenPopup] = React.useState(false);
 
@@ -22,8 +24,22 @@ function Sort() {
     dispatch(setSortIndex(obj));
     setOpenPopup(false);
   };
+
+  React.useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!event.path.includes(sortRef.current)) {
+        setOpenPopup(false);
+      }
+    };
+    document.body.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.body.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className="sort">
+    <div ref={sortRef} className="sort">
       <div className="sort__label">
         <svg
           width="10"
