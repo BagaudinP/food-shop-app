@@ -1,6 +1,6 @@
 import React from "react";
 
-import { setSortIndex } from "../redux/slices/filterSlice";
+import { selectSort, setSortIndex } from "../redux/slices/filterSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 export const listPopup = [
@@ -14,7 +14,7 @@ export const listPopup = [
 
 function Sort() {
   const dispatch = useDispatch();
-  const sortIndex = useSelector((state) => state.filter.sortIndex);
+  const sortIndex = useSelector(selectSort);
 
   const sortRef = React.useRef(null);
 

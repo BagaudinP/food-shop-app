@@ -3,7 +3,8 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
 export const fetchFoodItems = createAsyncThunk(
     'item/fetchFoodItemsStatus',
-    async ({ sortBy, order, categories, search, currentPage }) => {
+    async (params) => {
+        const { sortBy, order, categories, search, currentPage } = params;
         const resp = await axios.get(
             `https://62aee578b735b6d16a48d3b4.mockapi.io/items?page=${currentPage}&${search}&limit=8&${categories}&sortBy=${sortBy}&order=${order}`
         );
@@ -40,7 +41,8 @@ const foodItemsSlice = createSlice({
     },
 })
 
-// Action creators are generated for each case reducer function
+export const selectFoodData = (state) => state.foodItems;
+
 export const { setFoodItems } = foodItemsSlice.actions
 
 export default foodItemsSlice.reducer

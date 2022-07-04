@@ -5,12 +5,16 @@ import CardSkeleton from "../components/Card/CardSkeleton.jsx";
 import Categories from "../components/Categories";
 import Sort, { listPopup } from "../components/Sort";
 import Pagination from "../components/Pagination/Pagination";
-import { AppContext } from "../App";
 
 import { useNavigate } from "react-router-dom";
 import qs from "qs";
-import { setCategoriesIndex, setCurrentPage, setFilters } from "../redux/slices/filterSlice";
-import { fetchFoodItems } from "../redux/slices/foodItemsSlice";
+import {
+  setCategoriesIndex,
+  setCurrentPage,
+  setFilters,
+  selectFilter,
+} from "../redux/slices/filterSlice";
+import { fetchFoodItems, selectFoodData } from "../redux/slices/foodItemsSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 export default function Home() {
@@ -19,10 +23,8 @@ export default function Home() {
   const isSeacrh = React.useRef(false);
   const isMounted = React.useRef(false);
 
-  const { categoriesIndex, sortIndex, currentPage } = useSelector((state) => state.filter);
-  const { foodItems, status } = useSelector((state) => state.foodItems);
-
-  const { searchValue } = React.useContext(AppContext);
+  const { categoriesIndex, sortIndex, currentPage, searchValue } = useSelector(selectFilter);
+  const { foodItems, status } = useSelector(selectFoodData);
 
   const onClickCategory = (index) => {
     dispatch(setCategoriesIndex(index));
@@ -76,11 +78,11 @@ export default function Home() {
       // );
       // isSeacrh.current = true;
     }
-  }, []);
+  }, [categoriesIndex, sortIndex.sortProperty, currentPage, searchValue]);
 
   React.useEffect(() => {
     fetchItems();
-  }, []);
+  }, [categoriesIndex, sortIndex.sortProperty, currentPage, searchValue]);
 
   return (
     <div className="main__content">

@@ -2,10 +2,11 @@ import React from "react";
 import logoSursat from "../assets/img/logo.svg";
 import Search from "./Search/Search.jsx";
 import { useSelector } from "react-redux";
+import { selectCart } from "../redux/slices/cartSlice";
 import { Link } from "react-router-dom";
 
 function Header() {
-  const { items, totalPrice } = useSelector((state) => state.cart);
+  const { items, totalPrice } = useSelector(selectCart);
 
   const totalCount = items.reduce((sum, item) => sum + item.count, 0);
 
