@@ -6,7 +6,7 @@ import Categories from "../components/Categories";
 import Sort, { listPopup } from "../components/Sort";
 import Pagination from "../components/Pagination/Pagination";
 
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import qs from "qs";
 import {
   setCategoriesIndex,
@@ -106,7 +106,11 @@ export default function Home() {
         <div className="main__content-item">
           {status === "loading"
             ? [...new Array(8)].map((_, index) => <CardSkeleton key={index} />) // _, - чтобы js не ругался
-            : foodItems?.map((obj) => <Card key={obj.id} {...obj} />)}
+            : foodItems?.map((obj) => (
+                <Link to={`/itemFood/${obj.id}`}>
+                  <Card key={obj.id} {...obj} />
+                </Link>
+              ))}
         </div>
       )}
       <Pagination currentPage={currentPage} onChangePage={onChangePage} />
