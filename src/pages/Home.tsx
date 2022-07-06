@@ -1,12 +1,12 @@
 import React from "react";
 import CarouselHome from "../components/Carousel/CarouselHome";
-import Card from "../components/Card/Card.jsx";
-import CardSkeleton from "../components/Card/CardSkeleton.jsx";
+import Card from "../components/Card/Card";
+import CardSkeleton from "../components/Card/CardSkeleton";
 import Categories from "../components/Categories";
 import Sort, { listPopup } from "../components/Sort";
 import Pagination from "../components/Pagination/Pagination";
 
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import qs from "qs";
 import {
   setCategoriesIndex,
@@ -17,7 +17,7 @@ import {
 import { fetchFoodItems, selectFoodData } from "../redux/slices/foodItemsSlice";
 import { useSelector, useDispatch } from "react-redux";
 
-export default function Home() {
+const Home: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isSeacrh = React.useRef(false);
@@ -26,12 +26,12 @@ export default function Home() {
   const { categoriesIndex, sortIndex, currentPage, searchValue } = useSelector(selectFilter);
   const { foodItems, status } = useSelector(selectFoodData);
 
-  const onClickCategory = (index) => {
+  const onClickCategory = (index: number) => {
     dispatch(setCategoriesIndex(index));
   };
 
-  const onChangePage = (number) => {
-    dispatch(setCurrentPage(number));
+  const onChangePage = (page: number) => {
+    dispatch(setCurrentPage(page));
   };
 
   const fetchItems = async () => {
@@ -41,6 +41,7 @@ export default function Home() {
     const search = searchValue ? `search=${searchValue}` : "";
 
     dispatch(
+      // @ts-ignore
       fetchFoodItems({
         sortBy,
         order,
@@ -106,14 +107,12 @@ export default function Home() {
         <div className="main__content-item">
           {status === "loading"
             ? [...new Array(8)].map((_, index) => <CardSkeleton key={index} />) // _, - чтобы js не ругался
-            : foodItems?.map((obj) => (
-                <Link to={`/itemFood/${obj.id}`}>
-                  <Card key={obj.id} {...obj} />
-                </Link>
-              ))}
+            : foodItems?.map((obj: any) => <Card key={obj.id} {...obj} />)}
         </div>
       )}
       <Pagination currentPage={currentPage} onChangePage={onChangePage} />
     </div>
   );
 }
+
+export default Home;

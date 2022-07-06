@@ -1,16 +1,16 @@
 import React from "react";
 import logoSursat from "../assets/img/logo.svg";
-import Search from "./Search/Search.jsx";
+import Search from "./Search/Search";
 import { useSelector } from "react-redux";
 import { selectCart } from "../redux/slices/cartSlice";
 import { Link, useLocation } from "react-router-dom";
 
-function Header() {
+const Header: React.FC = () => {
   const { items, totalPrice } = useSelector(selectCart);
 
   const location = useLocation();
 
-  const totalCount = items.reduce((sum, item) => sum + item.count, 0);
+  const totalCount = items.reduce((sum: number, item: any) => sum + item.count, 0);
 
   return (
     <header className="d-flex justify-between align-center">

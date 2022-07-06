@@ -1,9 +1,19 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 import { addItem, selectCartItemById } from "../../redux/slices/cartSlice";
 
-export default function Card({ id, title, price, imageUrl, maker, sizes }) {
+type CardProps = {
+  id: string, 
+  title: string, 
+  price: number, 
+  imageUrl: string, 
+  maker: string, 
+  sizes: number[]
+}
+
+const Card: React.FC<CardProps> = ({ id, title, price, imageUrl, maker, sizes }) => {
   const dispatch = useDispatch();
   const cartItem = useSelector(selectCartItemById(id));
   const [activeSize, setActiveSize] = React.useState(0);
@@ -37,7 +47,9 @@ export default function Card({ id, title, price, imageUrl, maker, sizes }) {
           />
         </svg>
       </div>
-      <img className="card__image" src={imageUrl} alt="Card" />
+      <Link to={`/itemFood/${id}`}>
+        <img className="card__image" src={imageUrl} alt="Card" />
+      </Link>
       <div className="card__title">
         <h4>{title}</h4>
         <p>Производитель: {maker}</p>
@@ -74,3 +86,5 @@ export default function Card({ id, title, price, imageUrl, maker, sizes }) {
     </div>
   );
 }
+
+export default Card;

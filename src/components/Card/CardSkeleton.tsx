@@ -1,7 +1,7 @@
 import React from "react";
 import ContentLoader from "react-content-loader";
 
-const CardSkeleton = (props) => (
+const CardSkeleton: React.FC = (props) => (
   <ContentLoader
     speed={1}
     width={280}
@@ -17,7 +17,7 @@ const CardSkeleton = (props) => (
     <rect x="10" y="305" rx="5" ry="5" width="200" height="10" />
     <rect x="100" y="325" rx="10" ry="10" width="80" height="40" />
     <rect x="190" y="325" rx="10" ry="10" width="80" height="40" />
-  </ContentLoader>
+</ContentLoader>
 );
 
 export default CardSkeleton;

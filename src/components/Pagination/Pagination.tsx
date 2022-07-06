@@ -4,13 +4,12 @@ import ReactPaginate from "react-paginate";
 
 import styles from "./Pagination.module.scss";
 
-export default function Pagination({ currentPage, onChangePage }) {
-  //   const handlePageClick = (event) => {
-  //     const newOffset = (event.selected * itemsPerPage) % items.length;
-  //     console.log(`User requested page number ${event.selected}, which is offset ${newOffset}`);
-  //     setItemOffset(newOffset);
-  //   };
+type PaginationProps = {
+  currentPage: number,
+  onChangePage: (page: number) => void,
+};
 
+const Pagination: React.FC<PaginationProps> = ({ currentPage, onChangePage }) => {
   return (
     <div>
       <ReactPaginate
@@ -22,8 +21,9 @@ export default function Pagination({ currentPage, onChangePage }) {
         pageCount={3}
         forcePage={currentPage - 1}
         previousLabel="<"
-        renderOnZeroPageCount={null}
       />
     </div>
   );
-}
+};
+
+export default Pagination;

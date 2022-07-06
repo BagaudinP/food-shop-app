@@ -3,12 +3,17 @@ import axios from "axios";
 
 import { useNavigate, useParams } from "react-router-dom";
 
-const FullFoodItem = () => {
-  const [food, setFood] = React.useState();
+const FullFoodItem: React.FC = () => {
+  const [food, setFood] = React.useState<{
+    imageUrl: string,
+    maker: string,
+    title: string,
+    price: number,
+    description: string
+  }>();
   const { id } = useParams();
   const navigate = useNavigate();
 
-  console.log(food);
   React.useEffect(() => {
     async function fetchFoodItems() {
       try {
@@ -22,7 +27,7 @@ const FullFoodItem = () => {
     fetchFoodItems();
   }, []);
   if (!food) {
-    return "Ошибка запроса";
+    return <>"Ошибка запроса"</>;
   }
   return (
     <div className="full-food">
@@ -38,16 +43,5 @@ const FullFoodItem = () => {
     </div>
   );
 };
-function foo() {
-  for (let i = 0; i < 10; i++) {
-    console.log(i);
-  }
-}
-function foo() {
-  for (let i = 0; i < 10; i++) {
-    setTimeout(() => {
-      console.log(i);
-    }, 1000);
-  }
-}
+
 export default FullFoodItem;
