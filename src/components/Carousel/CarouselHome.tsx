@@ -1,11 +1,11 @@
 import React from "react";
 import carouselImage from "../../assets/img/carousel-image.jpg";
+import { Carousel } from "antd";
 
 import "antd/dist/antd.css";
-import { Carousel } from "antd";
 import "./index.scss";
 
-function CarouselHome() {
+const CarouselHome: React.FC = () => {
   return (
     <div>
       <Carousel autoplay>

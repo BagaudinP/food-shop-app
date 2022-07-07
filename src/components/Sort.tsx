@@ -1,29 +1,28 @@
 import React from "react";
-
-import { selectSort, setSortIndex } from "../redux/slices/filterSlice";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
+import { setSortIndex } from "../redux/slices/filter/slice";
+import { Sort, SortPropertyEnum } from "../redux/slices/filter/types";
 
 type ListPopupItem = {
   name: string;
-  sortProperty: string;
+  sortProperty: SortPropertyEnum;
 }
 
-type ClickPopup = MouseEvent & {
-  path: Node[];
-};
+type SortPopupProps = {
+  sortIndex: Sort;
+}
 
 export const listPopup: ListPopupItem[] = [
-  { name: "популярности + -", sortProperty: "rating" },
-  { name: "популярности - +", sortProperty: "-rating" },
-  { name: "цене по убыванию", sortProperty: "price" },
-  { name: "цене по возрастанию", sortProperty: "-price" },
-  { name: "алфавиту А - Я", sortProperty: "-title" },
-  { name: "алфавиту Я - А", sortProperty: "title" },
+  { name: "популярности + -", sortProperty: SortPropertyEnum.RATING_DESC },
+  { name: "популярности - +", sortProperty: SortPropertyEnum.RATING_ASC },
+  { name: "цене по убыванию", sortProperty: SortPropertyEnum.PRICE_DESC },
+  { name: "цене по возрастанию", sortProperty: SortPropertyEnum.PRICE_ASC },
+  { name: "алфавиту А - Я", sortProperty: SortPropertyEnum.TITLE_DESC },
+  { name: "алфавиту Я - А", sortProperty: SortPropertyEnum.TITLE_ASC },
 ];
 
-const Sort: React.FC = () => {
+const SortPopup: React.FC<SortPopupProps> = React.memo(({ sortIndex }) => {
   const dispatch = useDispatch();
-  const sortIndex = useSelector(selectSort);
 
   const sortRef = React.useRef<HTMLDivElement>(null);
 
@@ -80,6 +79,6 @@ const Sort: React.FC = () => {
       )}
     </div>
   );
-}
+});
 
-export default Sort;
+export default SortPopup;

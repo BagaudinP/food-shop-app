@@ -1,8 +1,9 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-
-import { addItem, selectCartItemById } from "../../redux/slices/cartSlice";
+import { selectCartItemById } from "../../redux/slices/cart/selectors";
+import { addItem } from "../../redux/slices/cart/slice";
+import { CartItem } from "../../redux/slices/cart/types";
 
 type CardProps = {
   id: string, 
@@ -10,7 +11,8 @@ type CardProps = {
   price: number, 
   imageUrl: string, 
   maker: string, 
-  sizes: number[]
+  sizes: number[],
+  count: number,
 }
 
 const Card: React.FC<CardProps> = ({ id, title, price, imageUrl, maker, sizes }) => {
@@ -21,13 +23,14 @@ const Card: React.FC<CardProps> = ({ id, title, price, imageUrl, maker, sizes })
   const addedCount = cartItem ? cartItem.count : 0;
 
   const onClickAdd = () => {
-    const item = {
+    const item: CartItem = {
       id,
       title,
       price,
       imageUrl,
       maker,
       size: sizes[activeSize],
+      count: 0
     };
     dispatch(addItem(item));
   };

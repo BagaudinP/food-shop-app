@@ -2,16 +2,24 @@ import React from "react";
 import logoSursat from "../assets/img/logo.svg";
 import Search from "./Search/Search";
 import { useSelector } from "react-redux";
-import { selectCart } from "../redux/slices/cartSlice";
 import { Link, useLocation } from "react-router-dom";
+import { selectCart } from "../redux/slices/cart/selectors";
 
 const Header: React.FC = () => {
   const { items, totalPrice } = useSelector(selectCart);
-
   const location = useLocation();
+  const isMounted = React.useRef(false);
 
   const totalCount = items.reduce((sum: number, item: any) => sum + item.count, 0);
 
+  React.useEffect(() => {
+    if (isMounted.current) {
+      const json = JSON.stringify(items)
+      localStorage.setItem('cart', json)  
+    } 
+    isMounted.current = true;
+  }, [items])
+  
   return (
     <header className="d-flex justify-between align-center">
       <Link to="/">
@@ -23,7 +31,7 @@ const Header: React.FC = () => {
           </div>
         </div>
       </Link>
-      <Search />
+      {location.pathname !== "/cart" && (<Search />)}
       <ul className="d-flex align-center">
         <li className="d-flex mr-25 cu-p">
           <svg

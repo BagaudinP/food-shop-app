@@ -1,6 +1,5 @@
 import React from "react";
 
-
 type CategoriesProps = {
   categoriesIndex: number;
   onClickCategory: (index: number) => void;
@@ -12,14 +11,14 @@ const categories: string[] = [
   "Хлебобулочная продукция",
   "Мясные продукты",
   "Соки",
+  "Сметана",
   "Яйца",
   "Кондитерские изделия",
-  "Сметана",
   "Растительные молочные продукты",
   "Йогурт ложковый",
 ];
 
-const Categories: React.FC<CategoriesProps> = ({ categoriesIndex, onClickCategory }) => {
+const Categories: React.FC<CategoriesProps> = React.memo(({ categoriesIndex, onClickCategory }) => {
   return (
     <div className="main__content-categories">
       <ul className="d-flex align-center flex-wrap">
@@ -34,6 +33,6 @@ const Categories: React.FC<CategoriesProps> = ({ categoriesIndex, onClickCategor
       </ul>
     </div>
   );
-}
+});
 
 export default Categories;
